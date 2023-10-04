@@ -19,6 +19,26 @@ void railFenceCipher(char *input, char *cipher, int rails) {
     cipher[cipherIndex] = '\0';
 }
 
+void displayRailFence(char *input, int rails) {
+    int length = strlen(input);
+    int cycle = 2 * (rails - 1);
+
+    for (int i = 0; i < rails; i++) {
+        int step = cycle - 2 * i;
+        for (int j = i; j < length; j += cycle) {
+            putchar(input[j]);
+
+            if (step > 0 && step < cycle && j + step < length) {
+                putchar(' ');
+                putchar(input[j + step]);
+            } else {
+                putchar(' ');
+            }
+        }
+        putchar('\n');
+    }
+}
+
 void railFenceDecipher(char *cipher, char *decipher, int rails) {
     int length = strlen(cipher);
     int cycle = 2 * (rails - 1);
@@ -51,6 +71,9 @@ int main() {
 
     railFenceCipher(input, cipher, rails);
     printf("\nCipher text: %s", cipher);
+
+    printf("\nRail Fence Pattern:\n");
+    displayRailFence(input, rails);
 
     railFenceDecipher(cipher, decipher, rails);
     printf("\nDeciphered text: %s\n", decipher);
